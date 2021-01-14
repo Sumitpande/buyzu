@@ -1,0 +1,102 @@
+{% extends "product/layout.html" %}
+{% load static %}
+
+{% block title %}Buyzu{% endblock %}
+{% block style %}
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;600;700&display=swap');
+
+body {
+  
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+
+.card {
+  display: inline-block;
+  background-color: #e6caca;
+  margin: 24px;
+  padding: 16px;
+  width: 260px;
+  min-width: 260px;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  transition: .4s;
+}
+
+.card:hover {
+  box-shadow: none;
+  
+
+}
+.card:hover .card-image {
+ 
+    transform: translateX(0px);
+    box-shadow: none;
+ 
+}
+
+.card-image {
+  width: 100%;
+  height: 240px;
+  border-radius: 8px;
+  position: relative;
+  transform: translateX(-32px);
+  box-shadow: 16px 4px 24px 0 rgba(0, 0, 0, 0.2);
+  transition: .4s;
+  object-fit: cover;
+}
+
+.card-body {
+  padding: 8px;
+}
+
+.card-title {
+  font-size: 18px;
+  margin: 12px 0;
+  transition: .4s;
+  font-family: 'DM Serif Display', serif;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+</style>
+
+{% endblock %}
+{% block body %}
+<div class="container-fluid">
+  
+    
+      <h1>
+        Wishlist
+      </h1>
+
+      {% for product in products  %}
+      <div class="card">
+        <a href="{{product.product.get_absolute_url}}">
+          <img class="card-image" src="{{product.product.image1}}" />
+        
+        </a>
+        
+        <div class="card-body">
+          <h3 class="card-title">{{product.product.name}} </h3>
+          <h6>{{product.product.subtitle}} </h6>
+          <p class="card-content">
+            <a type="button" class="btn btn-outline-dark" href="{{product.product.get_absolute_url}}">View</a>
+            
+            <a type="button" href="{% url 'product:removeFromWl' id=product.id %}" class="btn btn-outline-dark">Remove </a>
+            
+          </p>
+        </div>
+      </div>
+      {% endfor %}
+      
+ 
+  
+</div>
+
+
+
+{% endblock %}

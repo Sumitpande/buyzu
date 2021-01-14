@@ -1,0 +1,88 @@
+{% extends "product/layout.html" %}
+{% block title %}
+    Checkout
+{% endblock %}
+{% block body %}
+    <h1>Checkout</h1>
+    <div class="container">
+
+        <div class="row">
+
+            <div class=" col-md-6 col-xs-12 bg-light" >
+                <h3>Your order</h3><br>
+                <ul>
+                    {% for item in cart %}
+                    <li>
+                    {{ item.quantity }}x {{ item.product.name }}
+                    <span>${{ item.total_price|floatformat:2 }}</span>
+                    </li>
+                    {% endfor %}
+                    {% if cart.coupon %}
+                    <li>
+                    "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+                    <span class="neg">- ${{ cart.get_discount|floatformat:2 }}</span>
+                    </li>
+                    {% endif %}
+               </ul>
+               <p>Total: ${{ cart.get_total_price_after_discount|floatformat:2 }}</p>
+    
+            </div>
+            <div class=" col-md-6 col-xs-12 bg-light " >
+                <form method="post" class="order-form">
+                    {{ form.as_p}}
+                    <p><input type="submit" value="Place order"></p>
+                    {% csrf_token %}
+                </form>
+                <!-- <form method="post" class=" g-3 m-4">
+                    {% csrf_token %}
+                    <div class="col-md-6">
+                        <label for="inputEmail4" class="form-label">First Name</label>
+                        
+                        {{ form.first_name }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputPassword4" class="form-label">Last Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Email</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="col-12">
+                        <label for="inputAddress" class="form-label">Address</label>
+                        {{ form.address }}
+                        </div>
+                    
+                    <div class="col-md-6">
+                        <label for="inputCity" class="form-label">City</label>
+                        {{ form.city }}
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label for="inputZip" class="form-label">postal code</label>
+                        {{ form.postal_code }}
+                    </div>
+                    
+                    <div class="col-12 p-2 m-4">
+                        <input type="submit" class="btn btn-primary" value="Place order">
+                    </div>
+                    {% csrf_token %}
+                    </form> -->
+            </div>
+    
+
+        </div>
+        
+        
+        
+        
+    </div>
+
+    
+<!-- 
+    <form method="post" class="order-form">
+        {{ form.as_p}}
+        <p><input type="submit" value="Place order"></p>
+        {% csrf_token %}
+    </form> -->
+{% endblock %}
