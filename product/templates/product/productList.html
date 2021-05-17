@@ -1,122 +1,259 @@
 {% extends "product/layout.html" %}
 {% load static %}
-
+{% load custom_tags %}
 {% block title %}Buyzu{% endblock %}
 {% block style %}
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:wght@400;500;600;700&display=swap');
-
-body {
-  
-  font-family: 'Quicksand', sans-serif;
-}
-
-
-
-.card {
-  display: inline-block;
-  background-color: #e6caca;
-  margin: 24px;
-  padding: 16px;
-  width: 260px;
-  min-width: 260px;
-  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
-  transition: .4s;
-}
-
-.card:hover {
-  box-shadow: none;
-  
-
-}
-.card:hover .card-image {
- 
-    transform: translateX(0px);
-    box-shadow: none;
- 
-}
-
-.card-image {
-  width: 100%;
-  height: 240px;
-  border-radius: 8px;
-  position: relative;
-  transform: translateX(-32px);
-  box-shadow: 16px 4px 24px 0 rgba(0, 0, 0, 0.2);
-  transition: .4s;
-  object-fit: cover;
-}
-
-.card-body {
-  padding: 8px;
-}
-
-.card-title {
-  font-size: 18px;
-  margin: 12px 0;
-  transition: .4s;
-  font-family: 'DM Serif Display', serif;
-  font-weight: 600;
-  letter-spacing: 2px;
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'product/css/product.css' %}">
 
 {% endblock %}
 {% block body %}
+
+
 <div class="container-fluid">
   <div class="row">
-    <div  class="col-2">
+    <div class="col-2 ">
 
       <h3>Categories</h3>
-      <ul>
-          <li {% if not category %}class="selected"{% endif %}>
+      <ul class="list-unstyled categories">
+        <li {% if not category %}class="selected" {% endif %}>
           <a href="{% url 'product:product_list' %}">All</a>
-      </li>
-      {% for c in categories %}
-      <li {% if category.slug == c.slug %}class="selected"{% endif %}>
+        </li>
+        {% for c in categories %}
+        <li {% if category.slug == c.slug %}class="selected" {% endif %}>
           <a href="{{ c.get_absolute_url }}">{{ c.name }}</a>
-      </li>
-      {% endfor %}
+        </li>
+        {% endfor %}
       </ul>
+      <!-- Section: Sidebar -->
+      <section>
+
+        <!-- Section: Filters -->
+        <!-- <section> -->
+
+        <h5>Filters</h5>
+
+        <!-- Section: Condition -->
+        <section class="mb-4">
+
+          <h6 class="font-weight-bold mb-3">Condition</h6>
+
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="new">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="new">New</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="used">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="used">Used</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="collectible">
+            <label class="form-check-label small text-uppercase card-link-secondary"
+              for="collectible">Collectible</label>
+          </div>
+          <div class="form-check pl-0 mb-3 pb-1">
+            <input type="checkbox" class="form-check-input filled-in" id="renewed">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="renewed">Renewed</label>
+          </div>
+
+        </section>
+        <!-- Section: Condition -->
+
+        <!-- Section: Average -->
+        <section class="mb-4">
 
 
-      
+
+
+
+        </section>
+        <!-- Section: Average -->
+
+        <!-- Section: Price -->
+        <section class="mb-4">
+
+          <h6 class="font-weight-bold mb-3">Price</h6>
+
+          <div class="form-check pl-0 mb-3">
+            <input type="radio" class="form-check-input" id="under25" name="materialExampleRadios">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="under25">Under $25</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="radio" class="form-check-input" id="2550" name="materialExampleRadios">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="2550">$25 to $50</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="radio" class="form-check-input" id="50100" name="materialExampleRadios">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="50100">$50 to $100</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="radio" class="form-check-input" id="100200" name="materialExampleRadios">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="100200">$100 to $200</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="radio" class="form-check-input" id="200above" name="materialExampleRadios">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="200above">$200 & Above</label>
+          </div>
+          <form>
+            <div class="d-flex align-items-center mt-4 pb-1">
+              <div class="md-form md-outline my-0">
+                <input id="from" type="text" class="form-control mb-0">
+                <label for="form">$ Min</label>
+              </div>
+              <p class="px-2 mb-0 text-muted"> - </p>
+              <div class="md-form md-outline my-0">
+                <input id="to" type="text" class="form-control mb-0">
+                <label for="to">$ Max</label>
+              </div>
+            </div>
+          </form>
+
+        </section>
+        <!-- Section: Price -->
+
+        <!-- Section: Price version 2 -->
+        <section class="mb-4">
+
+          <h6 class="font-weight-bold mb-3">Price</h6>
+
+          <div class="slider-price d-flex align-items-center my-4">
+            <span class="font-weight-normal small text-muted mr-2">$0</span>
+            <form class="multi-range-field w-100 mb-1">
+              <input id="multi" class="multi-range" type="range" />
+            </form>
+            <span class="font-weight-normal small text-muted ml-2">$100</span>
+          </div>
+
+        </section>
+        <!-- Section: Price version 2 -->
+
+        <!-- Section: Size -->
+        <section class="mb-4">
+
+          <h6 class="font-weight-bold mb-3">Size</h6>
+
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="34">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="34">34</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="36">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="36">36</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="38">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="38">38</label>
+          </div>
+          <div class="form-check pl-0 mb-3">
+            <input type="checkbox" class="form-check-input filled-in" id="40">
+            <label class="form-check-label small text-uppercase card-link-secondary" for="40">40</label>
+          </div>
+          <a class="btn btn-link text-muted p-0" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+            aria-controls="collapseExample">
+            More
+          </a>
+          <div class="collapse pt-3" id="collapseExample">
+            <div class="form-check pl-0 mb-3">
+              <input type="checkbox" class="form-check-input filled-in" id="42">
+              <label class="form-check-label small text-uppercase card-link-secondary" for="42">42</label>
+            </div>
+            <div class="form-check pl-0 mb-3">
+              <input type="checkbox" class="form-check-input filled-in" id="44">
+              <label class="form-check-label small text-uppercase card-link-secondary" for="44">44</label>
+            </div>
+            <div class="form-check pl-0 mb-3">
+              <input type="checkbox" class="form-check-input filled-in" id="46">
+              <label class="form-check-label small text-uppercase card-link-secondary" for="46">46</label>
+            </div>
+            <div class="form-check pl-0 mb-3">
+              <input type="checkbox" class="form-check-input filled-in" id="50">
+              <label class="form-check-label small text-uppercase card-link-secondary" for="50">50</label>
+            </div>
+          </div>
+
+        </section>
+        <!-- Section: Size -->
+
+        <!-- Section: Color -->
+        <section class="mb-4">
+
+          <h6 class="font-weight-bold mb-3">Color</h6>
+
+          <div class="btn-group btn-group-toggle btn-color-group d-block mt-n2 ml-n2" data-toggle="buttons">
+            <label class="btn rounded-circle white border-inset-grey p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle grey p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle black p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle green p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle blue p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle purple p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle yellow p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle indigo p-3 m-2">
+              <input type="checkbox" checked autocomplete="off">
+            </label>
+            <label class="btn rounded-circle red p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+            <label class="btn rounded-circle orange p-3 m-2">
+              <input type="checkbox" autocomplete="off">
+            </label>
+          </div>
+
+        </section>
+        <!-- Section: Color -->
+
+      </section>
+      <!-- Section: Filters -->
+
+      </section>
+      <!-- Section: Sidebar -->
+
+
+
     </div>
     <div class="col-10">
       <h1>
         {% if category %}{{ category.name }}{% else %}Products
         {% endif %}
       </h1>
-
-      {% for product in products  %}
-      <div class="card">
-        <a href="{{product.get_absolute_url}}">
-          <img class="card-image" src="{{product.image1}}" />
-        
-        </a>
-        
-        <div class="card-body">
-          <h3 class="card-title">{{product.name}} </h3>
-          <h6>{{product.subtitle}} </h6>
-          <p class="card-content">
-            <a type="button" class="btn btn-outline-dark" href="{{product.get_absolute_url}}">View</a>
-            {% if product.id in wlist %}
-            <a  href="{% url 'product:removeFromWl' product.id %}" class="btn btn-outline-dark">Remove </a>
-            {% else %}
-            <a  href="{% url 'product:addToWishlist' product.id %}" class="btn btn-outline-dark">Add to Wishlist</a>
-            {% endif %}
-          </p>
-        </div>
+      <div class="row">
+        {% for product in products  %}
+          {% product_list product wishlist %}
+        {% endfor  %}
       </div>
-      {% endfor %}
-      
+
+
     </div>
+
   </div>
 </div>
 
 
 
+{% endblock %}
+
+{% block script %}
+<script>
+  $('#multi').mdbRange({
+    single: {
+      active: true,
+      multi: {
+        active: true,
+        rangeLength: 1
+      },
+    }
+  });
+</script>
 {% endblock %}

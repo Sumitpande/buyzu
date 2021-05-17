@@ -39,7 +39,21 @@ class Category(models.Model):
 #         return reverse('product:product_list_by_category',
 #                         args=[self.slug])
 
+
+class ProductManager(models.Manager):
+
+    def my_wishlist(self, user):
+        query = self.filter(myWishList__watchuser=user)
+        # query = query.select_related("root", "author", "lastedit_user")
+        # query = query.prefetch_related("tag_set")
+        return query
+
+    
+    
+
 class Product(models.Model):
+    objects = ProductManager()
+
     category = models.ForeignKey(Category,
         related_name='products',
         on_delete=models.CASCADE)
@@ -64,14 +78,26 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    # def is_wishlisted(self):
+    #     # query = self.objects.my_wishlist(self.request.user)
+    #     wlist = Product.objects.filter(myWishList__watchuser=self.request.user)
+    #     obj = Product.objects.get(id=self.id)
+    #     if obj in wlist:
+    #         return True
+    #     else:
+    #         return False
+
     def get_absolute_url(self):
         return reverse('product:product_detail',
                         args=[self.id, self.slug])
+    
+    
 
 
 
 class Wishlist(models.Model):
     product = models.ForeignKey(Product,
-        related_name='products',
+        related_name='myWishList',
         on_delete=models.CASCADE)
     watchuser  =  models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name="wuser")
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)

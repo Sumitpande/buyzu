@@ -1,5 +1,13 @@
 from django import forms
 from .models import Order
+
+STATE_CHOICES = [
+    ('MH', 'Maharashtra'),
+    ('Goa', 'Goa'),
+    ('UP', 'Uttar Pradesh'),
+    ('MP', 'Madhya Pradesh'),
+    
+]
 class OrderCreateForm(forms.ModelForm):
     first_name = forms.CharField(
         label = 'firstname',
@@ -26,6 +34,14 @@ class OrderCreateForm(forms.ModelForm):
             attrs = {'class': 'form-control', 'name': 'email'}
         )
     )
+    mobile = forms.CharField(
+        label = 'Mobile No.',
+        max_length = 1000,
+        required = True,
+        widget = forms.TextInput(
+            attrs = {'class': 'form-control', 'name': 'mobile'}
+        )
+    )
     address = forms.CharField(
         label = 'address',
         max_length = 1000,
@@ -42,6 +58,15 @@ class OrderCreateForm(forms.ModelForm):
             attrs = {'class': 'form-control', 'name': 'city'}
         )
     ) 
+    state = forms.ChoiceField(
+        label = 'State',
+        
+        choices = STATE_CHOICES,
+        required = True,
+        widget = forms.Select(
+            attrs = {'class': 'form-select', 'name': 'state'}
+        )
+    ) 
     postal_code = forms.CharField(
         label = 'postal code',
         max_length = 1000,
@@ -53,5 +78,5 @@ class OrderCreateForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ['first_name', 'last_name', 'email', 'address',
-        'postal_code', 'city']
+        fields = ['first_name', 'last_name', 'email','mobile', 'address',
+        'postal_code', 'city','state']

@@ -1,0 +1,70 @@
+{% load custom_tags %} 
+{% load static %}
+<nav class="navbar  sticky-top navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand fs-3" href="/">BUYZU</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        
+        <li class="nav-item fs-5">
+          <a class="nav-link align-middle" aria-current="page" href='{% url "product:wishList" %}'>
+            Wishlist <span class="badge bg-dark">{{ wishlist|length }}</span>
+          </a>
+        </li>
+        <li class="nav-item fs-5">
+
+          {% with total_items=cart|length %}
+          
+          <a class="nav-link" href='{% url "cart:cart_detail" %}' style=" height: 30px;">
+             
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span class="badge bg-dark">
+              {{ total_items }} | ₹{{ cart.get_total_price }}
+              
+            </span>
+
+          </a>
+
+          {% endwith %}
+
+          </a>
+        </li>
+        
+        
+        {% if user.is_authenticated %}
+          <li class="nav-item dropdown fs-5">
+            
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Your orders</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'account_logout' %}">Logout</a></li>
+
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item fs-5">
+            <a class="nav-link" href="{% url 'account_login' %}">Sign In</a>
+          </li>
+          <li class="nav-item fs-5">
+            <a class="nav-link" href="{% url 'account_signup' %}">Sign Up</a>
+          </li>
+
+          {% endif %}
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+

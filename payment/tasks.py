@@ -21,6 +21,7 @@ def payment_completed(order_id):
             message,
             settings.EMAIL_HOST_USER,
             [order.email])
+    print(message)
     # generate PDF
     html = render_to_string('orders/order/pdf.html', {'order': order})
     out = BytesIO()
@@ -28,8 +29,8 @@ def payment_completed(order_id):
     # weasyprint.HTML(string=html).write_pdf(out,
     # stylesheets=stylesheets)
     # attach PDF file
-    # email.attach(f'order_{order.id}.pdf',
-    #             out.getvalue(),
-    #             'application/pdf')
+    email.attach(f'order_{order.id}.pdf',
+                out.getvalue(),
+                'application/pdf')
     # send e-mail
     email.send()

@@ -41,7 +41,9 @@ def order_create(request):
     cart = Cart(request)
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
+        print(request.POST)
         if form.is_valid():
+            print('-------------valid------------')
             order = form.save(commit=False)
             if cart.coupon:
                 order.coupon = cart.coupon
@@ -55,6 +57,7 @@ def order_create(request):
             # clear the cart
             cart.clear()
             # launch asynchronous task
+            print('order',order.id)
             order_created.delay(order.id)
             # set the order in the session
             request.session['order_id'] = order.id

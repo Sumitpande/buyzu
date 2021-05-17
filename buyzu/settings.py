@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -32,8 +32,13 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL ='/accounts/login/' 
 # Application definition
+# CITIES_COUNTRY_MODEL = 'Orders.CustomCountryModel'
+# CITIES_CITY_MODEL=''
 
 INSTALLED_APPS = [
+    # 'cities',
+    'django_countries',
+
     'product.apps.ProductConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
@@ -42,6 +47,9 @@ INSTALLED_APPS = [
     'coupons.apps.CouponsConfig',
 
     'django.contrib.sites',
+    'celery',
+    
+
     
 
     
@@ -165,7 +173,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
 
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Braintree settings
 BRAINTREE_MERCHANT_ID = 'bqfnx9s3pssg3j8p' # Merchant ID
@@ -190,7 +202,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'sumitakashpande1230@gmail.com'
-EMAIL_HOST_PASSWORD = 'sumit123'
+EMAIL_HOST_PASSWORD = ''
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379

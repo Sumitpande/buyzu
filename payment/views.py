@@ -35,6 +35,7 @@ def payment_process(request):
             order.braintree_id = result.transaction.id
             order.save()
             # launch asynchronous task
+            print('+++++',order.id)
             payment_completed.delay(order.id)
             return redirect('payment:done')
         else:

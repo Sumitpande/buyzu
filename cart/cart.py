@@ -90,8 +90,8 @@ class Cart(object):
     def get_total_price_after_discount(self):
         return self.get_total_price() - self.get_discount()
 
-    @property
-    def wlist(self,request):
-        count = Wishlist.objects.filter(watchuser = request.user).values('product').count()
+    
+    def wlist(self):
+        wlist = Product.objects.my_wishlist(self.request.user)
         
-        return count
+        return wlist.count()

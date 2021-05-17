@@ -7,14 +7,32 @@ from product.models import Product
 import decimal
 
 
+STATE_CHOICES = [
+    ('MH', 'Maharashtra'),
+    ('Goa', 'Goa'),
+    ('UP', 'Uttar Pradesh'),
+    ('MP', 'Madhya Pradesh'),
+    
+]
+
+# from cities.models import BaseCountry
 
 
+# class CustomCountryModel(BaseCountry, models.Model):
+#     more_data = models.TextField()
 
-
+#     class Meta(BaseCountry.Meta):
+#         pass
+from django_countries.fields import CountryField
+class ShippingAddress(models.Model):
+    country = CountryField()
 class Order(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
+    mobile = models.CharField(max_length=250,blank=True,null=True)
+    
+    state = models.CharField(max_length=250,choices=STATE_CHOICES,blank=True,null=True)
     address = models.CharField(max_length=250)
     postal_code = models.CharField(max_length=20)
     city = models.CharField(max_length=100)
