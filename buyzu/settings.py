@@ -14,14 +14,15 @@ from pathlib import Path
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+import django_heroku
+import dj_database_url
 from decouple import config
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'u&t(^b-mgfi2vd1gd*q#3gn*$hz-ly__)@acd5q$$sr0!r5cv8'
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = 'u&t(^b-mgfi2vd1gd*q#3gn*$hz-ly__)@acd5q$$sr0!r5cv8'
+# SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -134,7 +135,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
 
+WHITENOISE_USE_FINDERS = True
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -179,7 +183,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(PROJECT_ROOT, 'static'),
 )
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Braintree settings
 BRAINTREE_MERCHANT_ID = 'bqfnx9s3pssg3j8p' # Merchant ID
 BRAINTREE_PUBLIC_KEY = '725nm4bvzc7bh2ww' # Public Key
@@ -208,3 +213,4 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
 REDIS_DB = 1
+django_heroku.settings(locals())
