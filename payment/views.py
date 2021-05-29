@@ -19,7 +19,7 @@ def payment_process(request):
     total_cost = order.get_total_cost()
     if request.method == 'POST':
         # retrieve nonce
-        print('--------in post----------')
+        
         nonce = request.POST.get('payment_method_nonce', None)
         print("nonce",nonce)
         # create and submit transaction
@@ -39,14 +39,15 @@ def payment_process(request):
             order.braintree_id = result.transaction.id
             order.save()
             # launch asynchronous task
-            print('+++++',order.id)
-            payment_completed.delay(order.id)
+            # print('+++++',order.id)
+            payment_completed(order.id)
+            # payment_completed.delay(order.id)
             return redirect('payment:done')
         else:
             return redirect('payment:canceled')
     else:
         # generate token
-        print('--------in get----------')
+        
         client_token = gateway.client_token.generate()
         return render(request,
             'payment/process.html',{
