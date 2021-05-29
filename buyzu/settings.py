@@ -210,7 +210,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # EMAIL_HOST_USER = 'sumitakashpande1230@gmail.com'
 # EMAIL_HOST_PASSWORD = ''
 
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-REDIS_DB = 1
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = 6379
+# REDIS_DB = 1
 django_heroku.settings(locals())

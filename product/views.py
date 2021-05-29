@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import *
 from cart.forms import *
-from .recommender import Recommender
+# from .recommender import Recommender
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -101,9 +101,10 @@ class ProductDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['cart_product_form'] =  CartAddProductForm()
         product=context['product']
-        r = Recommender()
+        # r = Recommender()
         products=Product.objects.filter(category=product.category,available=True)
-        recommended_products = r.suggest_products_for([product], 4)
+        # recommended_products = r.suggest_products_for([product], 4)
+        recommended_products = []
         context['recommended_products'] =  recommended_products
         context['products'] =  products
         
