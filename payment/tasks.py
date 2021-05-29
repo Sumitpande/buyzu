@@ -21,7 +21,7 @@ def payment_completed(order_id):
             message,
             settings.EMAIL_HOST_USER,
             [order.email])
-    print(message)
+#     print(message)
     # generate PDF
     html = render_to_string('orders/order/pdf.html', {'order': order})
     out = BytesIO()

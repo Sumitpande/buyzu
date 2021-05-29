@@ -203,12 +203,12 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PRIVATE_KEY
 )
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'sumitakashpande1230@gmail.com'
-# EMAIL_HOST_PASSWORD = ''
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = '2018bit051@sggs.ac.in'
+EMAIL_HOST_PASSWORD = 'prtfvkjigrepxixe'
 
 # REDIS_HOST = 'localhost'
 # REDIS_PORT = 6379
