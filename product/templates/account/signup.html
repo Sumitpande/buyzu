@@ -1,4 +1,5 @@
 {% load account socialaccount %}
+{% load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -34,9 +35,7 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.Inputs {
-  padding-top: 50px;
-}
+
 
 form {
   width: 100%;
@@ -49,15 +48,7 @@ form label {
   line-height: 30px;
 }
 
-input {
-  display: block;
-  margin-bottom: 20px;
-  width: 100%;
-  padding: 5px;
-  border: 1px solid rgb(133, 133, 133);
-  border-radius: 5px;
-  box-sizing: border-box;
-}
+
 
 button {
   display: block;
@@ -100,13 +91,13 @@ a {
 <body>
     <div class="container">
       <div class="form-container">
-        <div class="head">
-          <h3>Sign Up</h3>
-          <p>...</p>
+        <div class="head mb-3">
+          <h3 >Sign Up</h3>
+          
         </div>
         <form method="post" class="Inputs" action="{% url 'account_signup' %}" >
           {% csrf_token %}
-          {{ form.as_p }}
+          {{ form|crispy }}
           
           {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />

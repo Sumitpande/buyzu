@@ -1,20 +1,22 @@
 {% load account socialaccount %}
+{% load crispy_forms_tags %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>signup</title>
+<head>
+  <title>signin</title>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-   <style>
-       body {
-  background-color: #2a4066;
-}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+      body {
+        background-color: #2a4066;
+      }
 
-.form-container {
+
+      .form-container {
   /* margin: 100px auto; */
   padding: 30px;
   max-width: 350px;
@@ -29,35 +31,9 @@
   box-sizing: border-box;
 }
 
-.form-container .head {
-  text-align: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
 
-.Inputs {
-  padding-top: 50px;
-}
 
-form {
-  width: 100%;
-}
 
-form label {
-  display: block;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: grey;
-  line-height: 30px;
-}
-
-input {
-  display: block;
-  margin-bottom: 20px;
-  width: 100%;
-  padding: 5px;
-  border: 1px solid rgb(133, 133, 133);
-  border-radius: 5px;
-  box-sizing: border-box;
-}
 
 button {
   display: block;
@@ -159,15 +135,15 @@ a {
 <body>
     <div class="container">
       <div class="form-container">
-        <div class="head">
-          <h3>Sign in</h3>
+        <div class="head mb-3">
+          <h3 class="text-center">Sign in</h3>
           
             
           
         </div>
         <form method="POST" class="Inputs" action="{% url 'account_login' %}" >
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ form|crispy }}
            
 
             {% if redirect_field_value %}

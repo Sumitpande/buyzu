@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'u&t(^b-mgfi2vd1gd*q#3gn*$hz-ly__)@acd5q$$sr0!r5cv8'
-
+# SECRET_KEY = 'u&t(^b-mgfi2vd1gd*q#3gn*$hz-ly__)@acd5q$$sr0!r5cv8'
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com','localhost']
 
 CART_SESSION_ID = 'cart'
 SITE_ID = 1
@@ -45,29 +45,28 @@ INSTALLED_APPS = [
     
     'coupons.apps.CouponsConfig',
 
-    'django.contrib.sites',
-    'django.contrib.flatpages',
-    'celery',
-    'crispy_forms',
-    
-
-    
-
-    
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-
-
-
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+    'celery',
+    'crispy_forms',
+    
+
+
+    
+    
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SOCIALACCOUNT_PROVIDERS = {
@@ -80,8 +79,8 @@ SOCIALACCOUNT_PROVIDERS = {
             'access_type': 'online',
         },
         'APP':{
-            'client_id': '533164313023-3ivah72tg633sjbpp5h1f5hp7jep9n7d.apps.googleusercontent.com',
-            'secret': '7Au-X-ftmOBkQjAM-NbxzPbc',
+            'client_id': '485455340772-mm8dpu45orkpmevk51bo706rhas4l0q9.apps.googleusercontent.com',
+            'secret': 'A_DMtN1rsIMf3YcNdNGvakIn',
             'key': ''
 
         }
@@ -173,8 +172,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
-
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(PROJECT_ROOT, 'static'),
+)
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # Braintree settings
 BRAINTREE_MERCHANT_ID = 'bqfnx9s3pssg3j8p' # Merchant ID
 BRAINTREE_PUBLIC_KEY = '725nm4bvzc7bh2ww' # Public Key
@@ -192,7 +197,7 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PUBLIC_KEY,
     BRAINTREE_PRIVATE_KEY
 )
-
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_USE_TLS = True
