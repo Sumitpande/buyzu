@@ -7,9 +7,10 @@ from django.conf import settings
 from orders.models import Order
 from django.contrib.auth.decorators import login_required
 from .tasks import payment_completed
-
+from django.views.decorators.csrf import csrf_exempt
 # instantiate Braintree payment gateway
 gateway = braintree.BraintreeGateway(settings.BRAINTREE_CONF)
+
 
 @login_required
 def payment_process(request):
@@ -18,6 +19,7 @@ def payment_process(request):
     total_cost = order.get_total_cost()
     if request.method == 'POST':
         # retrieve nonce
+        print('--------in post----------')
         nonce = request.POST.get('payment_method_nonce', None)
         print("nonce",nonce)
         # create and submit transaction
@@ -28,9 +30,11 @@ def payment_process(request):
         'submit_for_settlement': True
         }
         })
+        order.user = request.user
         if result.is_success:
             # mark the order as paid
             order.paid = True
+            
             # store the unique transaction id
             order.braintree_id = result.transaction.id
             order.save()
@@ -42,15 +46,29 @@ def payment_process(request):
             return redirect('payment:canceled')
     else:
         # generate token
+        print('--------in get----------')
         client_token = gateway.client_token.generate()
         return render(request,
-            'payment/process.html',
-            {'order': order,
-            'client_token': client_token})
+            'payment/process.html',{
+            'order': order,
+            'client_token': client_token
+            })
 
 
 def payment_done(request):
     return render(request, 'payment/done.html')
+
 def payment_canceled(request):
     return render(request, 'payment/canceled.html')
 
+
+from django.http import JsonResponse
+@csrf_exempt
+def get_nonce(request):
+    
+    nonce = request.GET.get('nonce', None)
+    print(nonce)
+    data = {
+        'u': nonce
+    }
+    return JsonResponse(data)

@@ -1,0 +1,57 @@
+{% extends "product/layout.html" %}
+{% block title %}
+Addresses
+{% endblock %}
+{% block style %}
+<style>
+  .action .fa{
+      font-size: 20px;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+    <h3 class="m-3">
+        Your Purchase Preferences
+    </h3>
+    <a class="btn btn-outline-primary m-3" href="{% url 'orders:address-add'%}">Add New Address</a>
+    <div class="p-3">
+        {% for user in  object_list %}
+        <div class="card mb-3">
+            <h5 class="card-header">{{ user.first_name }} {{ user.last_name }}</h5>
+            <div class="card-body">
+                <h6 class="card-title">
+                    
+                    {% if user.is_default %}
+                        <p class="text-success">Default
+                            <i class="fa fa-check" aria-hidden="true"></i>
+                        </p> 
+                    {% else %}
+                    
+                    {% endif %}
+                </h6>
+                <p class="card-text">{{ user.address }}- 
+                    {{ user.city }} - {{ user.get_state_display }} - {{ user.get_country_display }} - {{ user.postal_code }}
+                </p>
+                <span class="action " >
+                <span class="action " >
+                    <a href="{% url 'orders:address-update' user.id %}" class="m-3 text-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Edit">
+                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                    </a>
+                    <a href="{% url 'orders:address-delete' user.id %}" class="text-danger" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete">
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </a>
+    
+                </span>
+                
+            </div>
+        </div>
+        {% empty %}
+        <a href="{% url 'orders:address-add' %}">Add Address</a>
+        {% endfor %}
+    
+    </div>
+    
+    
+</div>
+{% endblock %}

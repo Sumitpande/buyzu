@@ -4,61 +4,184 @@
 {% block title %}{{product.name}}{% endblock %}
 {% block style %}
 <link rel="stylesheet" href="{% static 'product/css/product.css' %}">
+<!-- <link rel="stylesheet" href="{% static 'product/css/home.css' %}"> -->
+<style>
+
+</style>
 {% endblock %}
 {% block body %}
 
+   <!-- Open Content -->
+   <section class="bg-light">
+	<div class="container pb-5">
+		<div class="row ">
+			<div class="col-lg-5 mt-5 p-3 image-viewer">
+				<div class="card mb-3 p-5">
+					<img class="card-img img-fluid main-image" src="{{product.image1}}" alt="Card image cap" id="product-detail">
+				</div>
+				<div class="row">
+					<!--Start Controls-->
+					<div class="col-1 align-self-center">
+						<a href="#multi-item-example" role="button" data-bs-slide="prev">
+							<i class="text-dark fa fa-chevron-left"></i>
+							<span class="sr-only">Previous</span>
+						</a>
+					</div>
+					<!--End Controls-->
+					<!--Start Carousel Wrapper-->
+					<div id="multi-item-example" class="col-10 carousel slide carousel-multi-item" data-bs-ride="carousel">
+						<!--Start Slides-->
+						<div class="carousel-inner product-links-wap" role="listbox">
 
+							<!--First slide-->
+							<!--First slide-->
+							<div class="carousel-item active">
+								<div class="row">
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image2}}" alt="Product Image 1">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image3}}" alt="Product Image 2">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image4}}" alt="Product Image 3">
+										</a>
+									</div>
+								</div>
+							</div>
+							<!--/.First slide-->
+							<!--/.First slide-->
 
+							<!--Second slide-->
+							<div class="carousel-item">
+								<div class="row">
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image2}}" alt="Product Image 1">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image3}}" alt="Product Image 2">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image4}}" alt="Product Image 3">
+										</a>
+									</div>
+								</div>
+							</div>
+							<!--/.Second slide-->
+						
+							<!--Third slide-->
+							<div class="carousel-item">
+								<div class="row">
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image2}}" alt="Product Image 1">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image3}}" alt="Product Image 2">
+										</a>
+									</div>
+									<div class="col-4 p-3">
+										<a href="#">
+											<img class="card-img img-fluid" src="{{product.image4}}" alt="Product Image 3">
+										</a>
+									</div>
+								</div>
+							</div>
+							<!--/.Third slide-->
+							
+						</div>
+						<!--End Slides-->
+					</div>
+					<!--End Carousel Wrapper-->
+					<!--Start Controls-->
+					<div class="col-1 align-self-center">
+						<a style="margin-left: 10px;" href="#multi-item-example" role="button" data-bs-slide="next">
+							<i class="text-dark fa fa-chevron-right"></i>
+							<span class="sr-only">Next</span>
+						</a>
+					</div>
+					<!--End Controls-->
+				</div>
+				
+			</div>
+			<!-- col end -->
+			<div class="col-lg-7 mt-5 p-3">
+				<div class="card p-3">
+					<div class="card-body">
+						<h1 class="h2">{{product.name}}</h1>
+						<p class="h3 py-2">₹ {{product.price}}</p>
+						<p class="py-2">
+							<i class="fa fa-star text-warning"></i>
+							<i class="fa fa-star text-warning"></i>
+							<i class="fa fa-star text-warning"></i>
+							<i class="fa fa-star text-warning"></i>
+							<i class="fa fa-star text-secondary"></i>
+							<span class="list-inline-item text-dark">Rating 4.8 | 36 Comments</span>
+						</p>
+						<ul class="list-inline">
+							<!-- <li class="list-inline-item">
+								<h6>Brand:</h6>
+							</li> -->
+							<li class="list-inline-item">
+								<p class="text-muted"><strong>{{product.subtitle}}</strong></p>
+							</li>
+						</ul>
 
+						<h6>Description:</h6>
+						<p>{{product.description|linebreaks}} </p>
+							
+							
+							
+							
+							
+							.</p>
+						<ul class="list-inline">
+							<li class="list-inline-item">
+								<h6>Avaliable Color :</h6>
+							</li>
+							<li class="list-inline-item">
+								<p class="text-muted"><strong>{{product.get_color_display}}</strong></p>
+							</li>
+						</ul>
 
+						<h6>Specification:</h6>
+						<ul class="list-unstyled pb-3">
+							<li>Care Instructions: Hand Wash Only</li>
+							<li>Fit Type: Regular</li>
+					
+							
+						</ul>
+						<form action="{% url 'cart:cart_add' product.id %}" method="post" class="w-50">
+							{{ cart_product_form }}<br>
+							{% csrf_token %}
+							<input class="btn btn-outline-dark mt-3" type="submit" value="Add to cart">
+			
+						</form>
 
-
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Close Content -->
 
 <section id="product-detail">
 	<div class="container">
-		<div class="image-viewer">
-			<div class="main-image">
-				<img src="{{product.image1}}" />
-			</div>
-			<div class="secondary-images">
-				<div class="secondary-image">
-					<img src="{{product.image1}}" />
-				</div>
-				<div class="secondary-image">
-					<img src="{{product.image2}}" />
-				</div>
-				<div class="secondary-image">
-					<img src="{{product.image3}}" />
-				</div>
-				<div class="secondary-image">
-					<img src="{{product.image4}}" />
-				</div>
-
-			</div>
-		</div>
-		<div class="detail">
-			<h1 class="detail-name">{{product.name}} </h1>
-			<p class="detail-short-description">
-				{{product.subtitle}}
-			</p>
-			<div class="detail-long-description">
-				<p>
-					{{product.description|linebreaks}}
-				</p>
-
-
-			</div>
-		</div>
-		<div class="pricing">
-			<div class="pricing-price">₹{{product.price}}</div>
-			<form action="{% url 'cart:cart_add' product.id %}" method="post">
-				{{ cart_product_form }}<br>
-				{% csrf_token %}
-				<input class="btn pricing-btn mt-3" type="submit" value="Add to cart">
-
-			</form>
-
-		</div>
+		
 		<div class="lightbox" id="lightbox">
 			<img src="http://placehold.it/650x650" />
 			<div class="lightbox-controls">
@@ -76,26 +199,25 @@
 
 	</div>
 </section>
-{% if recommended_products %}
 
+<div class="container mt-3 ">
 
-<div class="recommendations">
-	<h3>People who bought this also bought</h3>
-	<div class="row">
-		{% for product in recommended_products %}
-			{% product_list product wishlist %}
-		{% endfor %}
-	</div>
+	{% if recommended_products %}
+		
+		<div class="row mb-3">
+			<h3>People who bought this also bought</h3>
+			{% for product in recommended_products %}
+				{% product_list product wishlist %}
+			{% endfor %}
+		</div>
 
-</div>
+	{% endif %}
 
-
-{% endif %}
-<div class="container-fluid">
-	<h3>similar products</h3>
-	<div class="row">
+	
+	<div class="row mb-3">
+		<h3>similar products</h3>
 		{% for product in products %}
-		{% product_list product wishlist %}
+			{% product_list product wishlist %}
 		{% endfor %}
 
 
@@ -114,8 +236,52 @@
 
 {% block js %}
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+<script src="{% static 'product/js/custom.js' %}"></script>
 
 <script>
+	// Accordion
+    var all_panels = $('.templatemo-accordion > li > ul').hide();
+
+    $('.templatemo-accordion > li > a').click(function() {
+        console.log('Hello world!');
+        var target =  $(this).next();
+        if(!target.hasClass('active')){
+            all_panels.removeClass('active').slideUp();
+            target.addClass('active').slideDown();
+        }
+      return false;
+    });
+    // End accordion
+	// Product detail
+    $('.product-links-wap a').click(function(){
+      var this_src = $(this).children('img').attr('src');
+      $('#product-detail').attr('src',this_src);
+      return false;
+    });
+    $('#btn-minus').click(function(){
+      var val = $("#var-value").html();
+      val = (val=='1')?val:val-1;
+      $("#var-value").html(val);
+      $("#product-quanity").val(val);
+      return false;
+    });
+    $('#btn-plus').click(function(){
+      var val = $("#var-value").html();
+      val++;
+      $("#var-value").html(val);
+      $("#product-quanity").val(val);
+      return false;
+    });
+    $('.btn-size').click(function(){
+      var this_val = $(this).html();
+      $("#product-size").val(this_val);
+      $(".btn-size").removeClass('btn-secondary');
+      $(".btn-size").addClass('btn-success');
+      $(this).removeClass('btn-success');
+      $(this).addClass('btn-secondary');
+      return false;
+    });
+    // End roduct detail
 	class ImageViewer {
 		constructor(selector) {
 			this.selector = selector;

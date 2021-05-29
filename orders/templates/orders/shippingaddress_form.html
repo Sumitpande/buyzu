@@ -1,0 +1,84 @@
+{% extends "product/layout.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+    Buyzu: Address Preferences
+{% endblock %}
+{% block style %}
+<style>
+    .address{
+        max-width: 80%;
+        
+        margin: 10px;
+        
+        margin-bottom: 50px;
+    }
+    form{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        padding: 20px;
+        position: relative;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div class=" address">
+    <h4 class="mb-3">
+        Address Preferences
+    </h4>
+
+    <form method="post" class="row">{% csrf_token %}
+        <div class="col-md-6">
+          
+          {{ form.first_name|as_crispy_field}}
+    
+        </div>
+        <div class="col-md-6">
+          {{ form.last_name|as_crispy_field}}
+    
+        </div>
+        <div class="col-md-6">
+            {{ form.address|as_crispy_field}}
+          
+        </div>
+        <div class="col-md-6">
+          
+          {{ form.mobile|as_crispy_field}}
+        </div>
+        
+        <div class="col-md-4">
+         
+          {{ form.city|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+          
+          {{ form.state|as_crispy_field}}
+        </div>
+        <div class="col-md-3">
+            {{ form.country|as_crispy_field}}
+        </div>
+        <div class="col-md-2">
+          
+          {{ form.postal_code|as_crispy_field}}
+        </div>
+        <div class="col-md-12 mt-3">
+         
+          {{ form.default|as_crispy_field}}
+        </div>
+    
+        <div class="col-12 mb-3 mt-3">
+          <input type="submit" class="btn btn-outline-primary" value="Save" />
+        </div>
+      </form>
+    
+
+</div>
+
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends "product/layout.html" %}
+{% block title %}
+Checkout
+{% endblock %}
+{% load crispy_forms_tags %}
+{% load custom_tags %} 
+{% block style %}
+<style>
+  .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 10px;
+  }
+
+  form {
+    padding: 10px;
+  }
+</style>
+{% endblock %}
+{% block body %}
+<div class="container">
+
+  <h2 class="m-3">Checkout</h2>
+<!--Section: Block Content-->
+<section>
+
+  <!--Grid row-->
+  <div class="row">
+
+    <!--Grid column-->
+    <div class="col-lg-8 mb-4">
+
+      <!-- Card -->
+      <div class="card wish-list pb-1">
+        <div class="card-body">
+
+          <h5 class="mb-3 " style="font-size: 25px;">Billing details</h5>
+         
+          <!-- Grid row -->
+          <div class="row">
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Default preferences</button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">New Address</button>
+              </li>
+              
+            </ul>
+            <div class="tab-content" id="pills-tabContent">
+              <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                {% if addrs %}
+                  <form action="" method="post">{% csrf_token %}
+                    {{addrs_form|crispy}}
+                    <input type="submit" class="btn btn-primary m-3" value="Place Order" />
+                  </form>
+                {% else %}
+                  <h6>You don't have Default preferences.</h6>
+                  <p>If not logged in. Please login</p>
+                {% endif %}
+              </div>
+              <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                {% checkoutForm form %}
+              </div>
+            </div>
+            
+           
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--Grid column-->
+    <div class="col-lg-4">
+
+      <!-- Card -->
+      <div class="card mb-4">
+        <div class="card-body">
+
+          <h5 class="mb-3">Your Order</h5>
+
+
+          <ul class="list-group list-group-flush">
+            {% for item in cart %}
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              <strong>{{ item.quantity }} X </strong> {{ item.product.name }}
+              <span>Rs {{ item.total_price|floatformat:2 }}</span>
+            </li>
+
+            {% endfor %}
+            {% if cart.coupon %}
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+              "{{ cart.coupon.code }}" ({{ cart.coupon.discount }}% off)
+              <span class="text-danger">- Rs {{ cart.get_discount|floatformat:2 }}</span>
+            </li>
+
+            {% endif %}
+
+            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+              Shipping
+              <span class="text-success">Free</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+              <div>
+                <strong>The total amount of</strong>
+                <strong>
+                  <!-- <p class="mb-0">(including VAT)</p> -->
+                </strong>
+              </div>
+              <span><strong>Rs {{ cart.get_total_price_after_discount|floatformat:2 }}</strong></span>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+      <!-- Card -->
+
+      
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+</section>
+<!--Section: Block Content-->
+
+
+
+</div>
+
+
+
+{% endblock %}

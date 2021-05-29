@@ -1,0 +1,16 @@
+{% extends "product/layout.html" %}
+{% block title %}
+    Thank you
+{% endblock %}
+{% block body %}
+ <div class="container">
+    <div class="alert alert-success m-5" role="alert">
+
+        <h1 class="m-5">Thank you</h1>
+        <p>Your order has been successfully completed. Your order ID is
+        <strong>{{ order.id }}</strong>.</p>
+    
+    </div>
+ </div>
+    
+{% endblock %}

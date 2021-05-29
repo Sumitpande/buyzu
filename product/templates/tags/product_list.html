@@ -11,7 +11,7 @@
     <span class="product-catagory">{{product.subtitle}}</span>
     <h6><a href="{{ product.get_absolute_url }}">{{product.name}}</a></h6>
     <div class="product-bottom-details">
-      <div class="product-price"><small>{{product.price}}</small>{{product.price}}</div>
+      <div class="product-price"><small>₹{{product.price}}</small>₹{{product.price}}</div>
       <div class="product-links">
         
         {% if product.id in wishlist %}
@@ -19,10 +19,7 @@
         {% else %}
         <a href="{% url 'product:add-to-wishlist' product.id %}" ><i class="fa fa-heart" aria-hidden="true"></i></a>
         {% endif %}
-        
-
-        <a type="submit" href="{% url 'cart:cart_add' product.id %}"><i class="fa fa-cart-plus" aria-hidden="true"></i>
-        </a>
+      
       </div>
     </div>
   </div>

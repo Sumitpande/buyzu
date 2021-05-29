@@ -32,8 +32,7 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL ='/accounts/login/' 
 # Application definition
-# CITIES_COUNTRY_MODEL = 'Orders.CustomCountryModel'
-# CITIES_CITY_MODEL=''
+
 
 INSTALLED_APPS = [
     # 'cities',
@@ -43,11 +42,13 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
     'payment.apps.PaymentConfig',
-    # 'app.apps.AppConfig',
+    
     'coupons.apps.CouponsConfig',
 
     'django.contrib.sites',
+    'django.contrib.flatpages',
     'celery',
+    'crispy_forms',
     
 
     
@@ -68,7 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
-
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
         'SCOPE': [
@@ -173,11 +174,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Braintree settings
 BRAINTREE_MERCHANT_ID = 'bqfnx9s3pssg3j8p' # Merchant ID
@@ -197,12 +193,12 @@ BRAINTREE_CONF = braintree.Configuration(
     BRAINTREE_PRIVATE_KEY
 )
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'sumitakashpande1230@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'sumitakashpande1230@gmail.com'
+# EMAIL_HOST_PASSWORD = ''
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379

@@ -15,8 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.contrib.flatpages import views
 
 urlpatterns = [
+    path('about/', views.flatpage, {'url': '/about/'}, name='about'),
+    path('contact/', views.flatpage, {'url': '/contact/'}, name='contact'),
+    # path('pages/', include('django.contrib.flatpages.urls')),
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls', namespace='cart')),
     path('coupons/', include('coupons.urls', namespace='coupons')),
@@ -24,8 +28,8 @@ urlpatterns = [
     path('',include('product.urls', namespace='product')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('payment/', include('payment.urls', namespace='payment')),
+      
     
-
     path('accounts/', include('allauth.urls')),
     
 ]

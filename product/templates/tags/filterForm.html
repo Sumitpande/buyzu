@@ -1,0 +1,83 @@
+
+<!-- Section: Filters -->
+<section class="mt-3 mb-3 p-4">
+
+
+    <!-- Section: Condition -->
+    <section class="mb-4">
+
+      <h6 class="font-weight-bold mb-3">Condition</h6>
+      {% for c in form.condition %}
+        <div class="form-check">
+          {{c}}
+          <label class="form-check-label" for="flexCheckDefault">
+            {{c.label}}
+          </label>
+        </div>
+      {% endfor %}
+      
+
+    </section>
+    <!-- Section: Condition -->
+
+    <!-- Section: Price -->
+    <section class="mb-4">
+
+      <h6 class="font-weight-bold mb-3">Price</h6>
+  
+      <div class="d-flex align-items-center mt-4 pb-1">
+        <div class="md-form md-outline my-0">
+          {{form.price_min}}
+          <label for="form">$ {{form.price_min.label}}</label>
+        </div>
+        <p class="px-2 mb-0 text-muted" style="vertical-align: middle;"> - </p>
+        <div class="md-form md-outline my-0">
+          {{form.price_max}}
+          <label for="to">$ {{form.price_max.label}}</label>
+        </div>
+      </div>
+      
+    </section>
+    <!-- Section: Price -->
+
+    
+
+    <!-- Section: Size -->
+    <section class="mb-4">
+
+      <h6 class="font-weight-bold mb-3">Size</h6>
+
+      {% for c in form.size %}
+        <div class="form-check">
+          {{c}}
+          <label class="form-check-label" for="flexCheckDefault">
+            {{c.label}}
+          </label>
+        </div>
+      {% endfor %}
+      
+
+    </section>
+    <!-- Section: Size -->
+
+    <!-- Section: Color -->
+    <section class="mb-4">
+
+      <h6 class="font-weight-bold mb-3">Color</h6>
+
+      <div class="btn-group btn-group-toggle btn-color-group d-block mt-n2 ml-n2" data-toggle="buttons">
+        {% for c in form.color %}
+          <div class="form-check">
+            {{c}}
+            <label class="form-check-label" for="flexCheckDefault">
+              {{c.label}}
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+
+    </section>
+    <!-- Section: Color -->
+
+  </section>
+  <!-- Section: Filters -->

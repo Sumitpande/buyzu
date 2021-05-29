@@ -66,3 +66,11 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(ShippingAddress)
 class ShippingAddressAdmin(admin.ModelAdmin):
     pass
+
+# @admin.register(OrderItem)
+# class OrderItemAdmin(admin.ModelAdmin):
+#     # inlines = [
+#     #     OrderItemInline,
+#     # ]
+#     pass
+

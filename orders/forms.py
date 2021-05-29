@@ -1,5 +1,6 @@
 from django import forms
-from .models import Order
+from .models import Order, ShippingAddress
+from django_countries.fields import CountryField
 
 STATE_CHOICES = [
     ('MH', 'Maharashtra'),
@@ -80,3 +81,14 @@ class OrderCreateForm(forms.ModelForm):
         model = Order
         fields = ['first_name', 'last_name', 'email','mobile', 'address',
         'postal_code', 'city','state']
+
+
+class AddressForm(forms.Form):
+    
+    shipping_address = forms.ModelChoiceField(queryset=ShippingAddress.objects.all(),widget=forms.RadioSelect,required = True)
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(AddressForm, self).__init__(*args, **kwargs)
+
+        if user:
+            self.fields['shipping_address'].queryset = ShippingAddress.objects.filter(user=user)

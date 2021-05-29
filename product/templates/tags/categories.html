@@ -1,0 +1,24 @@
+{% load static %}
+{% load custom_tags %}
+
+<!-- Start Categories of The Month -->
+<section class="container py-5">
+    <div class="row text-center pt-3">
+        <div class="col-lg-6 m-auto">
+            <h1 class="h1">Categories of The Month</h1>
+            <p>
+                Great Savings. Every Day. Shop from our Deal of the Day, Lightning Deals and avail other great offers. 
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        {% for cat in categories %}
+        <div class="col-12 col-md-3 p-5 mt-3">
+            <a href="{{cat.get_absolute_url}} "><img src="{{ cat.img }}" ></a>
+            <!-- <h5 class="text-center mt-3 mb-3 ">Shirts</h5> -->
+        </div>
+        {% endfor%}
+    </div>
+</section>
+<!-- End Categories of The Month -->
+

@@ -3,7 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from coupons.models import Coupon
 # Create your models here.
 from product.models import Product
-
+from django.contrib.auth.models import User
 import decimal
 
 
@@ -25,8 +25,25 @@ STATE_CHOICES = [
 #         pass
 from django_countries.fields import CountryField
 class ShippingAddress(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True)
+    first_name = models.CharField(max_length=50,blank=True,null=True)
+    last_name = models.CharField(max_length=50,blank=True,null=True)
+    mobile = models.CharField(max_length=250,blank=True,null=True)
+    postal_code = models.CharField(max_length=20,blank=True,null=True)
+    address = models.CharField(max_length=250 ,blank=True,null=True)
+    city = models.CharField(max_length=100 ,blank=True,null=True)
+    state = models.CharField(max_length=250,choices=STATE_CHOICES,blank=True,null=True)
     country = CountryField()
+    default = models.BooleanField(default=False)
+
+    def is_default(self):
+        return self.default
+    
+    def __str__(self):
+        return '{} {}\n{}, {}, {} ({})'.format(self.first_name,self.last_name,self.address,self.city,self.country.name,self.postal_code)
+
 class Order(models.Model):
+    user =  models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()
@@ -57,6 +74,8 @@ class Order(models.Model):
         return total_cost - total_cost * (self.discount / decimal.Decimal(100))
 
 class OrderItem(models.Model):
+    # user =  models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True)
+
     order = models.ForeignKey(Order,
             related_name='items',
             on_delete=models.CASCADE)

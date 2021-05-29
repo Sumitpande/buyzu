@@ -9,22 +9,51 @@ from cart.cart import Cart
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
 from django.db.models import Q
-class ProductListView(ListView):
+from .forms import FilterForm, Search
+from django.views.generic.edit import FormMixin
+from .filters import ProductFilter
 
+def home(request):
+    categories = Category.objects.all()
+
+    return render(request, 'product/home.html', {'categories': categories})
+class ProductListView(ListView, FormMixin):
+    form_class = FilterForm
     model = Product
     template_name = 'product/productList.html'
     context_object_name = 'products'
+    # filterset_class = ProductFilter
+
     
     # paginate_by = 100  # if pagination is desired
 
-    def get_queryset(self, *args, **kwargs):
-        slug = self.kwargs.get('slug','')
+    def get(self, request, *args, **kwargs):
+        # self.get_context_data(**kwargs)
+        self.get_queryset(self, *args, **kwargs)
 
+        return super().get(request, *args, **kwargs)
+
+    def get_queryset(self, *args, **kwargs):
+        
+        slug = self.kwargs.get('slug','')
+        qs = product_filter(self.request)
+        attr = self.request.GET
+           
+        if 'Sort_by' in attr.keys():
+            if attr['Sort_by'] == '0':
+                print(len(qs.order_by('-price')))
+                qs = qs.order_by('-price')
+            else:
+                print(len(qs.order_by('price')))
+                qs =  qs.order_by('price')
         if slug:
             category = get_object_or_404(Category, slug=slug)
-            return  Product.objects.filter(category=category)
-        else:
-            return  Product.objects.all()
+            return qs.filter(category=category)
+            # return  Product.objects.filter(category=category)
+        elif qs:
+
+            return qs
+        
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -35,13 +64,33 @@ class ProductListView(ListView):
             context['category'] = category
         
         context['categories'] = categories
-        wishlist = Product.objects.my_wishlist(self.request.user).values('id')
-        wlist = [int(w['id']) for w in wishlist]
-        context['wishlist'] = wlist
+        if self.request.user.is_authenticated:
+
+            wishlist = Product.objects.my_wishlist(self.request.user).values('id')
+            wlist = [int(w['id']) for w in wishlist]
+            context['wishlist'] = wlist
+        context['form'] = FilterForm()
+        context['sort_form'] = Search()
+        if self.request.method == 'GET':
+            attr = self.request.GET
+           
+            if 'Sort_by' in attr.keys():
+                context['sort_form'] = Search(self.request.GET or None)
+                # if attr['Sort_by'] == '0':
+                #     context['products'] = self.get_queryset().order_by('-price')
+                # else:
+                #     context['products'] = self.get_queryset().order_by('price')
+            # context['attr'] = attr
+            context['form'] = FilterForm(self.request.GET or None)
         
         return context
 
-
+def product_filter(request):
+    f = ProductFilter(request.GET, queryset=Product.objects.all())
+    
+        
+    return f.qs
+   
 class ProductDetailView(DetailView):
 
     model = Product
@@ -57,27 +106,8 @@ class ProductDetailView(DetailView):
         recommended_products = r.suggest_products_for([product], 4)
         context['recommended_products'] =  recommended_products
         context['products'] =  products
-        return context
-
-
-
-# class WishListListView(ListView):
-
-#     model = Product
-#     template_name = 'product/wishlist.html'
-#     context_object_name = 'products'
-    
-#     # paginate_by = 100  # if pagination is desired
-
-#     def get_queryset(self, *args, **kwargs):
-   
-#         return  Product.objects.my_bookmarks(self.request.user)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
         
-#         return context
-
+        return context
 
 
 

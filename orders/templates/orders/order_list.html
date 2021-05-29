@@ -1,0 +1,85 @@
+{% extends "product/layout.html" %}
+{% block title %}
+Your orders
+{% endblock %}
+{% block style %}
+<style>
+  
+</style>
+{% endblock %}
+{% block body %}
+
+<div class="container">
+
+    <div class="p-3">
+        <h2 class="m-3">
+            Your orders
+        </h2>
+    
+    
+    {% for obj in object_list %}
+    
+        <div class="card mb-3" >
+            <h6 class="card-header">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        ORDER PLACED <br>
+                        {{ obj.created }}
+                    </div>
+    
+                    <div>
+                        TOTAL <br>
+                        ₹{{ obj.get_total_cost }}
+                    </div>
+    
+                    <div>
+                        SHIP TO <br>
+                        {{ obj.first_name }} {{ obj.last_name }}
+                    </div>
+    
+                    <div>
+                        ORDER # {{ obj.id }}<br>
+                        <a href="{% url 'orders:admin_order_detail' obj.id %}">view order details</a> | <a href="#">Invoice</a>
+                    </div>
+    
+    
+                </div>
+            </h6>
+            {% for item in obj.items.all %}
+            <div class="row g-0">
+                <div class="col-md-3" >
+                    <img src="{{item.product.image1}}" class="p-3" alt="" style="max-width: 200px;max-height: 200px;">
+                </div>
+                <div class="col-md-5">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a href="{{ item.product.get_absolute_url }}">{{item.product.name}} </a>
+                            
+                        </h5>
+                        <p class="card-text">{{item.product.subtitle}}</p>
+                        <p class="card-text"><small class="text-muted text-success">Arriving tomorrow by 9 PM</small></p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    
+                    <div class="card-body">
+                        <a class="btn btn-primary mb-3" href="#" role="button">Track Package</a>
+                        <a class="btn btn-primary mb-3" href="#" role="button">Request Cancellation</a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% endfor %}
+            
+            
+        </div>
+    {% empty %}
+    <h5>You don't have any orders</h5>
+    
+    {% endfor %}
+    </div>
+
+</div>
+
+
+{% endblock %}

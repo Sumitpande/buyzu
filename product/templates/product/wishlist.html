@@ -7,11 +7,10 @@
 
 {% endblock %}
 {% block body %}
-
-    
-  <h1>
+<div class="container">
+  <h2 class="m-3">
     Wishlist
-  </h1>
+  </h2>
   <div class="row">
     {% for product in products  %}
     {% product_list product wishlist %}
@@ -24,6 +23,11 @@
     {% endfor %}
 
   </div>
+
+
+</div>
+    
+  
  
 
 {% endblock %}
