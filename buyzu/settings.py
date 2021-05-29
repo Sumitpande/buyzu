@@ -29,7 +29,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com','localhost']
 
 CART_SESSION_ID = 'cart'
-SITE_ID = 1
+SITE_ID = 2
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL ='/accounts/login/' 
 # Application definition
