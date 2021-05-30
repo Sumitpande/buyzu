@@ -24,7 +24,7 @@ from decouple import config
 SECRET_KEY = 'u&t(^b-mgfi2vd1gd*q#3gn*$hz-ly__)@acd5q$$sr0!r5cv8'
 # SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com','localhost']
 
