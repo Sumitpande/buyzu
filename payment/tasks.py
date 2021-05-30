@@ -18,8 +18,8 @@ def payment_completed(order_id):
     # create invoice e-mail
     subject = f'Buyzu - EE Invoice no. {order.id}'
     message = 'Please, find attached the invoice for your recent purchase.'
-    to = 'rovoda9368@isecv.com'
-    # to = order.email
+    # to = 'rovoda9368@isecv.com'
+    to = order.email
     # email = EmailMessage(subject,
     #         message,
     #         settings.EMAIL_HOST_USER,

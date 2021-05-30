@@ -15,8 +15,8 @@ def order_created(order_id):
     # recipient_list = ['2018bit051@sggs.ac.in',]
     # send_mail( subject, message, email_from, recipient_list )
     order = Order.objects.get(id=order_id)
-    to = 'rovoda9368@isecv.com'
-    # to = order.email
+    # to = 'rovoda9368@isecv.com'
+    to = order.email
     subject =   f'Buyzu: Order no. {order.id}'
     message =   f'Dear {order.first_name},\n\n' \
                 f'You have successfully placed an order.' \

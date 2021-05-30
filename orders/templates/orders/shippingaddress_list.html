@@ -47,7 +47,8 @@ Addresses
             </div>
         </div>
         {% empty %}
-        <a href="{% url 'orders:address-add' %}">Add Address</a>
+        <p> You don't have any addresses</p>
+      
         {% endfor %}
     
     </div>
