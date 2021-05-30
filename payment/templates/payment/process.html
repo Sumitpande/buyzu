@@ -31,7 +31,7 @@
     
     <div class="container main">
       <div class="page-header mt-3">
-        <h1>Pay {{order.get_total_cost}}</h1>
+        <h1 class="m-3">Pay your order </h1>
       </div>
     
       <div id="error-box" class="alert alert-danger " style="display: none;" role="alert"></div>
@@ -42,7 +42,7 @@
         <input type="hidden" id="nonce" name="payment_method_nonce" value="">
         {% csrf_token %}
         <div id="dropin-container"></div>
-        <button  class="btn btn-lg btn-primary" id="submit-button">Pay</button>
+        <button  class="btn btn-lg btn-primary m-3" id="submit-button">Pay {{order.get_total_cost}}</button>
 
         
       </form>
@@ -138,7 +138,7 @@
             var s = $("input#nonce").val(payload.nonce);  
             
             $('#myNonce').submit();
-            console.log($("input#nonce").val())
+            // console.log($("input#nonce").val())
             data = {
               'nonce':`${payload.nonce}`,
               "csrfmiddlewaretoken" : `${csrftoken}`,

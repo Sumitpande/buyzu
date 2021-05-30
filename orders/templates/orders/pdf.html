@@ -1,24 +1,78 @@
 <html>
-<body>
+   <head>
+      <style>
+         table, th, td {
+           border: 1px solid black;
+           margin: 10px;
+           max-width: 100%;
+         }
+         body{
+            margin: 10px;
+         }
+         </style>
+   </head>
+<body >
 
    <div class="container">
-      <h1>My Shop</h1>
- <p>
- Invoice no. {{ order.id }}</br>
- <span class="secondary">
- {{ order.created|date:"M d, Y" }}
- </span>
- </p>
- <h3>Bill to</h3>
- <p>
-    {{ order.first_name }} {{ order.last_name }}<br>
-    {{ order.email }}<br>
-    {{ order.address }}<br>
-    {{ order.postal_code }}, {{ order.city }}
-    </p>
-    <h3>Items bought</h3>
+      
+ <table>
+ <tbody>
+   <tr class="total">
+      <th colspan="2">
+         <h1>Buyzu</h1>
+      </th>
+      
+      </tr>
+   
+  <tr>
+    <th>Invoice No.</th>
+    <td>{{ order.id }}</td>
+  </tr>
+  <tr>
+   <th>Date</th>
+   <td>{{ order.created|date:"M d, Y" }}</td>
+ </tr>
+  
+</tbody>
+
+</table>
+ 
+ <table style="margin: 10px;">
+   
+   <tbody>
+      <tr class="total">
+         <th colspan="2">
+            Bill to
+         </th>
+         
+         </tr>
+      
+     <tr>
+       <th>Name</th>
+       <td>{{ order.first_name }} {{ order.last_name }}</td>
+     </tr>
+     <tr>
+      <th>Email</th>
+      <td>{{ order.email }}</td>
+    </tr>
+     <tr>
+       <th>Address</th>
+       <td>{{ order.address }} , {{ order.city }} {{ order.postal_code }}</td>
+     </tr>
+   </tbody>
+   
+ </table>
+ 
+    
     <table>
+       
     <thead>
+      <tr class="total">
+      <th colspan="4">
+         Items bought
+      </th>
+      
+      </tr>
     <tr>
     <th>Product</th>
     <th>Price</th>
@@ -28,23 +82,27 @@
     </thead>
     <tbody>
     {% for item in order.items.all %}
-    <tr class="row{% cycle "1" "2" %}">
+    <tr class='row{% cycle "1" "2" %}'>
     <td>{{ item.product.name }}</td>
-    <td class="num">${{ item.price }}</td>
+    <td class="num">Rs {{ item.price }}</td>
     <td class="num">{{ item.quantity }}</td>
-    <td class="num">${{ item.get_cost }}</td>
+    <td class="num">Rs {{ item.get_cost }}</td>
     </tr>
     {% endfor %}
     <tr class="total">
     <td colspan="3">Total</td>
-    <td class="num">${{ order.get_total_cost }}</td>
+    <td class="num">Rs {{ order.get_total_cost }}</td>
     </tr>
+    <tr class="total">
+      <th colspan="4">
+         {% if order.paid %}PAID{% else %}Pending payment{% endif %}
+      </th>
+      
+      </tr>
     </tbody>
     </table>
    
-    <span class="{% if order.paid %}paid{% else %}pending{% endif %}">
-    {% if order.paid %}Paid{% else %}Pending payment{% endif %}
-    </span>
+    
    </div>
  
 </body>

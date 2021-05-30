@@ -35,6 +35,11 @@ def admin_order_detail(request, order_id):
     'orders/detail.html',
     {'order': order})
 
+def invoice(request, pk):
+    order = get_object_or_404(Order, id=pk)
+    return render(request,
+    'orders/detail.html',
+    {'order': order})
 
 @login_required
 def order_create(request):
